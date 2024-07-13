@@ -12,7 +12,7 @@ async def unknown(update: Update, context: CallbackContext) -> None:
 
 
 
-TOKEN = os.environ["TOKEN"]
+TOKEN = "6174496827:AAHJb6JtqS5ZH2KHUgLkf_kSc-aR1vnmm-Q"
 application = Application.builder().token(TOKEN).build()
 
 class AdminBot(APIView):
