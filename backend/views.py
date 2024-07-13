@@ -38,5 +38,8 @@ class AdminBot(APIView):
         application.add_handler(CallbackQueryHandler(filter_callback_data))
         application.add_handler(MessageHandler(filters.COMMAND, unknown))
         return Response(status=status.HTTP_200_OK)
+    
+    def get(self,request: Request):
+        return Response({"message":"working"},status=status.HTTP_200_OK)
 
 
