@@ -5,6 +5,7 @@ from rest_framework import status
 from telegram import Update
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ConversationHandler, MessageHandler, filters
 from .adminbot.callback_func import *
+from asgiref.sync import sync_to_async
 import os
 
 # Create your views here.
@@ -35,9 +36,9 @@ application.add_handler(MessageHandler(filters.COMMAND, unknown))
 
 class AdminBot(APIView):
 
-    async def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         update = Update.de_json(request.data, application.bot)
-        await application.process_update(update)
+        application.process_update(update)
         return Response(status=status.HTTP_200_OK)
     
     def get(self, request, *args, **kwargs):
