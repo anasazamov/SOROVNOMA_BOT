@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from rest_framework import status
 from telegram import Update
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ConversationHandler, MessageHandler, filters, Updater
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ConversationHandler, MessageHandler, filters, CallbackContext
 from .adminbot.callback_func import *
 import json
 import requests as req
@@ -13,7 +13,7 @@ async def unknown(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text('Kechirasiz, bu komanda tanilmagan. Iltimos, /start komandasidan foydalaning.')
 
 TOKEN = "6174496827:AAHJb6JtqS5ZH2KHUgLkf_kSc-aR1vnmm-Q"
-application = Application.builder().token(TOKEN).build()
+application = Application.builder().token(TOKEN).updater(None).context_types(CallbackContext).build()
 
 def send_message(data):
 

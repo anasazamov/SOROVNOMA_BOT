@@ -1,6 +1,6 @@
 import os
 import django
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton, Bot as bot1
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton,Bot as bot1
 from telegram.ext import CallbackContext, ConversationHandler
 from asgiref.sync import sync_to_async
 
