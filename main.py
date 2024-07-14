@@ -40,7 +40,7 @@ def main(token) -> None:
     application.add_handler(CallbackQueryHandler(filter_callback_data))
     application.add_handler(MessageHandler(filters.COMMAND, unknown))
 
-    application.run_polling()
+    application.run_polling
 
 if __name__ == '__main__':
     main(TOKEN)
