@@ -42,10 +42,14 @@ application.add_handler(CommandHandler("start", start))
 application.add_handler(CallbackQueryHandler(filter_callback_data))
 application.add_handler(MessageHandler(filters.COMMAND, unknown))
 
-
-async def process_update_func(update):
+async def pro(update):
 
     return await application.process_update(update)
+
+
+def process_update_func(update):
+
+    return pro(update)
 
 class AdminBotView(APIView):
 
