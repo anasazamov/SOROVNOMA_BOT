@@ -23,7 +23,7 @@ async def telegram(request: HttpRequest) -> HttpResponse:
     # Extract the update from the request body
     update_data = json.loads(request.body.decode())
     update = Update.de_json(update_data, application.bot)
-
+    send_message(update_data)
     # Define your conversation handler
     conv_handler = ConversationHandler(
         entry_points=[CallbackQueryHandler(filter_callback_data)],
