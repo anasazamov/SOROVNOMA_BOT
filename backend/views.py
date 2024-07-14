@@ -1,11 +1,10 @@
 from django.shortcuts import render
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from django.http import HttpRequest, HttpResponse
 from rest_framework import status
 from telegram import Update
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ConversationHandler, MessageHandler, filters, Updater
 from .adminbot.callback_func import *
-import os
+import json
 import requests as req
 
 # Create your views here.
@@ -42,19 +41,10 @@ application.add_handler(CommandHandler("start", start))
 application.add_handler(CallbackQueryHandler(filter_callback_data))
 application.add_handler(MessageHandler(filters.COMMAND, unknown))
 
-class AdminBotView(APIView):
-
-    async def post(self, request, *args, **kwargs):
+async def telegram(request: HttpRequest) -> HttpResponse:
+    """Handle incoming Telegram updates by putting them into the `update_queue`"""
+    await application.update_queue.put(
+        Update.de_json(data=json.loads(request.body), bot=application.bot)
+    )
+    return HttpResponse()
         
-        send_message(request.data)
-        update = await Update.de_json(request.data, application.bot)
-        # Update ni qayta ishlash
-        await application.process_update(update)
-        
-        return Response({"message":"OK"}, status=status.HTTP_200_OK)
-        
-
-
-    
-    def get(self, request, *args, **kwargs):
-        return Response({"message": "working"}, status=status.HTTP_200_OK)
