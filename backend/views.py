@@ -42,6 +42,11 @@ application.add_handler(CommandHandler("start", start))
 application.add_handler(CallbackQueryHandler(filter_callback_data))
 application.add_handler(MessageHandler(filters.COMMAND, unknown))
 
+
+async def process_update_func(update):
+
+    return await application.process_update(update)
+
 class AdminBotView(APIView):
 
     def post(self, request, *args, **kwargs):
@@ -49,7 +54,7 @@ class AdminBotView(APIView):
         send_message(request.data)
         update = Update.de_json(request.data, application.bot)
         # Update ni qayta ishlash
-        application.process_update(update)
+        process_update_func(update)
         
         return Response({"message":"OK"}, status=status.HTTP_200_OK)
         
