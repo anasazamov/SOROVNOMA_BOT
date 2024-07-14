@@ -7,7 +7,6 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Conv
 from .adminbot.callback_func import *
 import os
 
-Updater().bot
 # Create your views here.
 
 async def unknown(update: Update, context: CallbackContext) -> None:
@@ -17,12 +16,14 @@ TOKEN = "6174496827:AAHJb6JtqS5ZH2KHUgLkf_kSc-aR1vnmm-Q"
 application = Application.builder().token(TOKEN).build()
 
 
-class AdminBot(APIView):
+class AdminBotView(APIView):
 
     def post(self, request, *args, **kwargs):
+        
         update = Update.de_json(request.data, application.bot)
         conv_handler = ConversationHandler(
         entry_points=[CallbackQueryHandler(filter_callback_data)],
+        
         states={
         BOT_TOKEN: [MessageHandler(filters.TEXT & (~filters.COMMAND), get_bot_token)],
         CHANEL_NAME: [MessageHandler(filters.TEXT & (~filters.COMMAND), get_chanel_name)],

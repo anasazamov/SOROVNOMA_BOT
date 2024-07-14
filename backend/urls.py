@@ -1,6 +1,6 @@
 from django.urls import path, include
-from backend.views import AdminBot
+from backend.views import AdminBotView
 
 urlpatterns = [
-    path('', AdminBot.as_view()),
+    path('', AdminBotView.as_view()),
 ]
