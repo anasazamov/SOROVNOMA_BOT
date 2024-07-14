@@ -44,7 +44,7 @@ application.add_handler(MessageHandler(filters.COMMAND, unknown))
 async def telegram(request: HttpRequest) -> HttpResponse:
     """Handle incoming Telegram updates by putting them into the `update_queue`"""
     await application.update_queue.put(
-        Update.de_json(data=json.loads(request.body), bot=application.bot)
+        Update.de_json(data=json.loads(request.body.decode()), bot=application.bot)
     )
     return HttpResponse()
         
