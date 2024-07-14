@@ -1,6 +1,6 @@
 import os
 import django
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, Bot as bot1
 from telegram.ext import CallbackContext, ConversationHandler
 from asgiref.sync import sync_to_async
 import logging
@@ -90,7 +90,7 @@ async def get_bot_token(update: Update, context: CallbackContext):
             
             await update.message.reply_text("<b>Bu tokenni avval ulagansiz boshqa token kiriting!!!</b>",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Bekor Qilish",callback_data="cancel")]]),parse_mode="HTML")
             return BOT_TOKEN
-       
+    
         context.user_data['bot_token'] = bot_token
         bot_name = bot_info[1]
 
@@ -104,6 +104,8 @@ async def get_bot_token(update: Update, context: CallbackContext):
             token=context.user_data['bot_token'],
             bot_admin=bot_admin
         )
+        bot = bot1(context.user_data['bot_token'])
+        bot.set_webhook(f"https://samtuit.pythonanywhere.com/api/{context.user_data['bot_token']}")
         buttons = [
             [InlineKeyboardButton(bot.name,callback_data=f"bot:{bot.token}")],
             [InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")]

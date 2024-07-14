@@ -60,7 +60,7 @@ async def check_chanels(channel_data: REQUIRED_CHANNELS, context: CallbackContex
         return not_subscription
     return False
 
-async def start(update: Update, context: CallbackContext):
+async def start2(update: Update, context: CallbackContext):
     token = context.bot.token
     bot = await sync_to_async(Bot.objects.get)(token=token)
     required_channels_qs = await sync_to_async(list)(REQUIRED_CHANNELS.objects.filter(bot=bot))
@@ -87,7 +87,7 @@ async def start(update: Update, context: CallbackContext):
     
     await message.reply_html("<b>Аssalomu Аlaykum.\n🙂 Soʼrovnoma botga xush kelibsiz!</b>",reply_markup=ReplyKeyboardMarkup([[KeyboardButton("Ovoz Berish")]],resize_keyboard=True))
 
-async def question(update: Update, context: CallbackContext):
+async def question2(update: Update, context: CallbackContext):
     token = context.bot.token
     bot = await sync_to_async(Bot.objects.get)(token=token)
     required_channels_qs = await sync_to_async(list)(REQUIRED_CHANNELS.objects.filter(bot=bot))
@@ -147,15 +147,15 @@ async def select_option(update: Update, context: CallbackContext):
     await sync_to_async(question_obj.save)()
 
     if is_exist_other_q:
-        return await question(update,context)
+        return await question2(update,context)
     await context.bot.delete_message(chat_id=chat_id,message_id=message_id)
     await update.callback_query.message.reply_html("<b>Barcha so'rovnomalarga javob berib bo'lgansiz!!!</b>")
 
-async def filter_callback_data(update: Update, context: CallbackContext):
+async def filter_callback_data2(update: Update, context: CallbackContext):
 
     data = update.callback_query.data
 
     if data == "checked_chanels":
-        await start(update,context)
+        await start2(update,context)
     elif "select_option" in data.split(":"):
         await select_option(update,context)
