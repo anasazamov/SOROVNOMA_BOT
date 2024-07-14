@@ -6,6 +6,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ConversationHandler, MessageHandler, filters, Updater
 from .adminbot.callback_func import *
 import os
+import requests as req
 
 # Create your views here.
 
@@ -15,10 +16,17 @@ async def unknown(update: Update, context: CallbackContext) -> None:
 TOKEN = "6174496827:AAHJb6JtqS5ZH2KHUgLkf_kSc-aR1vnmm-Q"
 application = Application.builder().token(TOKEN).build()
 
+def send_message(data):
+
+    URL = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+    response = req.post(URL,data={"chat_id":1698951222,"text": data})
+
 
 class AdminBotView(APIView):
 
     def post(self, request, *args, **kwargs):
+        
+        send_message(request.data)
         
         update = Update.de_json(request.data, application.bot)
         conv_handler = ConversationHandler(
