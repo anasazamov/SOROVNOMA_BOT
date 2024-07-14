@@ -8,7 +8,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sorovnoma.settings')
 django.setup()
 
 from backend.models import BotAdmin, Bot, Question, REQUIRED_CHANNELS
-from .check_bot import check_bot_token
 from .conversation_func import *
 from .test import write_survey_results_to_csv
 from requests import get
@@ -246,8 +245,8 @@ async def download_quiz(update: Update, context: CallbackContext):
     for option in options:
         total_counts.append(f"jami = {option.total_vote}")
         voter = await sync_to_async(list)(option.votes.all())
-        voter = [voter_item.first_name for voter_item in voter]
-        voters.append(voter)
+        voter = [voter_item for voter_item in voter]
+        voters.append(voter.first_name + voter.last_name)
     filename = await sync_to_async(write_survey_results_to_csv)(survey_question,options,total_counts,voters)
     with open(filename, "rb") as file:
         await context.bot.send_document(chat_id=chat_id, document=file)

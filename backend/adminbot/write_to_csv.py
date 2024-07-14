@@ -24,7 +24,7 @@ def write_survey_results_to_csv(survey_question, options, total_counts, values):
                 value_row = ""
             writer.writerow(value_row)
     
-    return f'{time_} natijalari.csv'
+    return f'{time_} {survey_question}.csv'
 
 
 dictionary = {

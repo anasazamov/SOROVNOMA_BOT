@@ -118,7 +118,7 @@ async def get_bot_token(update: Update, context: CallbackContext):
 
 async def get_chanel_name(update: Update, context: CallbackContext):
 
-    await update.message.reply_html("Botdan foydalanish uchun obuna bo'lish kerak bo'lgan kanallarni havolasi yoki usernameni yuboring.\n Misol uchun: \n<b>@username</b>,\n<b>https://t.me/username</b>,\n<b>https://t.me/{telegram xeshkod}</b>")
+    await update.message.reply_html("Botdan foydalanish uchun obuna bo'lish kerak bo'lgan kanalning IDsi yoki usernameni yuboring.\n Misol uchun: \n<b>@username</b>,\n<b><code>464654654</code></b>")
     context.user_data['chanel'] = update.message.text
     return BOT_CHANELS
 
@@ -137,12 +137,27 @@ async def bot_chanels(update: Update, context: CallbackContext):
     if "https" in chanel_link.split(":"):
         response = get(chanel_link)
         if response.status_code == 200:
-            await sync_to_async(REQUIRED_CHANNELS.objects.create)(bot=bot,channel_link=chanel,channel=chanel)
+            try:
+                channel_id = context.user_data["channel_id"]
+                chanel = await sync_to_async(REQUIRED_CHANNELS.objects.get)(id=channel_id)
+                chanel.channel_link = chanel_link
+                await sync_to_async(chanel.save)()
+            except:
+                await update.message.reply_html("<b>Xato!!! Avval kanal IDsini kiriting:</b>",reply_markup=InlineKeyboardMarkup(buttons))
+                return BOT_CHANELS
+
             await update.message.reply_html("<b>Kanal muvaqqiyatli qo'shildi. Yana kanal qo'shishni hohlaysizmi?\nKanal nomini kiriting:</b>",reply_markup=InlineKeyboardMarkup(buttons))
             return CHANEL_NAME
         else:
             update.message.reply_html("<b>Yuborgan havolangiz yaroqsiz</b>",reply_markup=InlineKeyboardMarkup(buttons))
             return BOT_CHANELS
+        
+    elif chanel_link.isnumeric():
+        chanel_obj = await sync_to_async(REQUIRED_CHANNELS.objects.create)(bot=bot,channel_id=chanel_link,channel=chanel)
+        chanel_pk = chanel_obj.pk
+        context.user_data['channel_id'] = chanel_pk
+        await update.message.reply_html("<b>Kanal IDsi qabul qilidi!!!\nKanal qo'shilish havolasini yuboring\nMisol uchun:\nhttps://t.me/+JIbjbjhbUJHVHJvbhjb554BVH</b>")
+        return BOT_CHANELS
     else:
         response = get(f"https://t.me/{chanel_link}")
         
@@ -150,6 +165,7 @@ async def bot_chanels(update: Update, context: CallbackContext):
             await sync_to_async(REQUIRED_CHANNELS.objects.create)(bot=bot,username=chanel_link,channel=chanel)
             await update.message.reply_html("<b>Kanal muvaqqiyatli qo'shildi. Yana kanal qo'shishni hohlaysizmi?\nKanal nomini kiriting:</b>",reply_markup=InlineKeyboardMarkup(buttons))
             return CHANEL_NAME
+    
         await update.message.reply_html("<bYuborgan usernamemingiz yaroqsiz, tekshirib qaytadan yuboring!!!</b>",reply_markup=InlineKeyboardMarkup(buttons))
         return BOT_CHANELS
     

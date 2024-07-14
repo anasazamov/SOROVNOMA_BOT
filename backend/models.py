@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+
 class BotAdmin(models.Model):
 
     chat_id = models.IntegerField()
@@ -32,6 +33,7 @@ class REQUIRED_CHANNELS(models.Model):
     channel = models.CharField(max_length=50)
     username = models.CharField(max_length=50, blank= True)
     channel_link = models.URLField(max_length=150, blank= True)
+    channel_id = models.IntegerField(blank= True)
     bot = models.ForeignKey(to=Bot,on_delete=models.CASCADE)
 
     def __str__(self) -> str:
@@ -52,7 +54,7 @@ class Question(models.Model):
     option = models.ManyToManyField(Options)
     bot = models.ForeignKey(to=Bot,on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
-    voter = models.ForeignKey(to=Voter, on_delete=models.CASCADE,blank=True,null=True)
+    voter = models.ManyToManyField(Voter)
 
     def __str__(self) -> str:
         return self.name
