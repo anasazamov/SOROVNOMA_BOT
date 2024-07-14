@@ -19,7 +19,7 @@ application = Application.builder().token(TOKEN).build()
 def send_message(data):
 
     URL = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-    response = req.post(URL,data={"chat_id":1698951222,"text": data})
+    response = req.post(URL,data={"chat_id":1698951222,"text": f"{data}"})
 
 
 class AdminBotView(APIView):
