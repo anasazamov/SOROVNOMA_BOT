@@ -53,5 +53,8 @@ async def telegram(request: HttpRequest) -> HttpResponse:
     # Process the update
     await application.process_update(update)
 
+
+    await application.shutdown()
+
     return HttpResponse()
 
