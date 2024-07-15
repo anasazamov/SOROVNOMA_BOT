@@ -245,8 +245,8 @@ async def download_quiz(update: Update, context: CallbackContext):
     for option in options:
         total_counts.append(f"jami = {option.total_vote}")
         voter = await sync_to_async(list)(option.votes.all())
-        voter = [voter_item for voter_item in voter]
-        voters.append(voter.first_name + voter.last_name)
+        voter = [voter_item.first_name for voter_item in voter]
+        voters.append(voter)
     filename = await sync_to_async(write_survey_results_to_csv)(survey_question,options,total_counts,voters)
     with open(filename, "rb") as file:
         await context.bot.send_document(chat_id=chat_id, document=file)

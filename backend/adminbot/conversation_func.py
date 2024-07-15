@@ -12,7 +12,7 @@ django.setup()
 
 from backend.models import Question, Options, Bot, BotAdmin, REQUIRED_CHANNELS, Bot, BotAdmin
 from .check_bot import check_bot_token
-logger = logging.getLogger(__name__)
+
 # Stages
 QUESTION1, OPTION2, BOT_TOKEN, CHANEL_NAME, BOT_CHANELS = range(5)
 
@@ -104,8 +104,8 @@ async def get_bot_token(update: Update, context: CallbackContext):
             token=context.user_data['bot_token'],
             bot_admin=bot_admin
         )
-        bot = bot1(context.user_data['bot_token'])
-        bot.set_webhook(f"https://samtuit.pythonanywhere.com/api/{context.user_data['bot_token']}")
+        # bot = bot1(context.user_data['bot_token'])
+        # await bot.set_webhook(f"https://samtuit.pythonanywhere.com/api/{context.user_data['bot_token']}")
         buttons = [
             [InlineKeyboardButton(bot.name,callback_data=f"bot:{bot.token}")],
             [InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")]

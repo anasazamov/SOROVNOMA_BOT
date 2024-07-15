@@ -2,11 +2,11 @@ import logging
 from telegram.ext import Application, CommandHandler, CallbackContext, MessageHandler, filters, CallbackQueryHandler, ConversationHandler
 from telegram import Update
 # from backend.user_bot.callback_func import *
-from backend.user_bot.callback_func import start, filter_callback_data, question
+from backend.user_bot.callback_func import start2, filter_callback_data2, question2
 import os
 import django
 # Bot tokeningizni kiriting
-TOKEN = '6174496827:AAHJb6JtqS5ZH2KHUgLkf_kSc-aR1vnmm-Q'
+TOKEN = '5994532458:AAEedjxmGAiP_05u91zjlBXD4eiiJ6g2wO0'
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sorovnoma.settings')
 django.setup()
@@ -28,10 +28,10 @@ def main(token) -> None:
     application = Application.builder().token(token).build()
     
  
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(CallbackQueryHandler(filter_callback_data))
+    application.add_handler(CommandHandler("start", start2))
+    application.add_handler(CallbackQueryHandler(filter_callback_data2))
     application.add_handler(MessageHandler(filters.COMMAND, unknown))
-    application.add_handler(MessageHandler(filters.Text("Ovoz Berish"), question))
+    application.add_handler(MessageHandler(filters.Text("Ovoz Berish"), question2))
 
     application.run_polling()
 
