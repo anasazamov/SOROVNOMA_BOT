@@ -9,11 +9,11 @@ from requests import get
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sorovnoma.settings')
 django.setup()
 
-from backend.models import Question, Options, Bot, BotAdmin, REQUIRED_CHANNELS, Bot, BotAdmin
+from backend.models import Question, Options, Bot, BotAdmin, REQUIRED_CHANNELS, Bot, BotAdmin, Voter
 from .check_bot import check_bot_token
 
 # Stages
-QUESTION1, OPTION2, BOT_TOKEN, CHANEL_NAME, BOT_CHANELS = range(5)
+QUESTION1, OPTION2, BOT_TOKEN, CHANEL_NAME, BOT_CHANELS, START_FORWARD, FORWARD_FOR_USER, CANCEL_FORWARD = range(8)
 
 # Entry Point for the Conversation
 async def start_conversation_quiz(update: Update, context: CallbackContext):
@@ -104,7 +104,7 @@ async def get_bot_token(update: Update, context: CallbackContext):
             bot_admin=bot_admin
         )
         bot = bot1(context.user_data['bot_token'])
-        from backend.views import DOMEN
+        from backend.config import DOMEN
 
         await bot.set_webhook(f"{DOMEN}/api/{context.user_data['bot_token']}")
         buttons = [
@@ -180,3 +180,33 @@ async def cancel(update: Update, context: CallbackContext):
     chat_id = update.callback_query.message.chat_id
     await context.bot.edit_message_text(chat_id=chat_id,text="Bot qo'shish va botga kannal qo'shish to'xtatildi!!!",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")]]),message_id=update.callback_query.message.message_id)
     return ConversationHandler.END
+
+async def start_forwrad(update: Update, context: CallbackContext):
+
+    data = update.callback_query.data.split(":")
+    token = data[1]+":"+data[2]
+    context.user_data['token'] = token
+    
+    chat_id = update.callback_query.message.chat_id
+    button = [
+        [InlineKeyboardButton("Bekor Qilish", callback_data="cancel_forward")]
+    ]
+    await context.bot.edit_message_text(chat_id=chat_id,text="<b>Obunachilaringizga yubormoqchi bo'lgan xabarni yuboring:</b>",reply_markup=InlineKeyboardMarkup(button),message_id=update.callback_query.message.message_id,parse_mode="HTML")
+    return FORWARD_FOR_USER
+
+async def forward_for_user(update: Update, context: CallbackContext):
+    chat_id_from = update.message.chat_id
+    message_id = update.message.message_id
+    token = context.user_data['token']
+    bot = Bot.objects.get(token=token)
+    bot_users = await sync_to_async(list)(Voter.objects.filter(bot=bot))
+    for chat in bot_users:
+        await context.bot.forward_message(chat_id=chat.chat_id,message_id=message_id,from_chat_id=chat_id_from)
+    await update.message.reply_html("<b>Xabar obunachilarga muvfaqiyatli</b>",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")]]))
+    return ConversationHandler.END
+
+async def cancel_forward(update: Update, context: CallbackContext):
+    chat_id = update.callback_query.message.chat_id
+    await context.bot.edit_message_text(chat_id=chat_id,text="Obunachilarga xabar yuborish bekor qilindi!!!",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")]]),message_id=update.callback_query.message.message_id)
+    return ConversationHandler.END
+

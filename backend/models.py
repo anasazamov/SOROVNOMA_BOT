@@ -12,13 +12,6 @@ class BotAdmin(models.Model):
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"
 
-class Voter(models.Model):
-
-    chat_id = models.IntegerField()
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    username = models.CharField(max_length=50)
-
 class Bot(models.Model):
 
     name = models.CharField(max_length=50)
@@ -27,6 +20,14 @@ class Bot(models.Model):
 
     def __str__(self) -> str:
         return self.token
+
+class Voter(models.Model):
+
+    chat_id = models.IntegerField()
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    username = models.CharField(max_length=50)
+    bot = models.ForeignKey(to=Bot,on_delete=models.CASCADE)
 
 class REQUIRED_CHANNELS(models.Model):
 

@@ -5,6 +5,7 @@ from .adminbot.callback_func import *
 from .user_bot.callback_func import *
 import json
 import requests as req
+from .config import DOMEN
 
 # Create your views here.
 
@@ -21,6 +22,9 @@ conv_handler = ConversationHandler(
         BOT_CHANELS: [MessageHandler(filters.TEXT & (~filters.COMMAND), bot_chanels)],
         QUESTION1: [MessageHandler(filters.TEXT & (~filters.COMMAND), question_create)],
         OPTION2: [MessageHandler(filters.TEXT & (~filters.COMMAND), option_create)],
+        START_FORWARD: [MessageHandler(filters.TEXT & (~filters.COMMAND), start_forwrad)],
+        FORWARD_FOR_USER: [MessageHandler(filters.TEXT & (~filters.COMMAND), forward_for_user)],
+        CANCEL_FORWARD: [MessageHandler(filters.TEXT & (~filters.COMMAND), cancel_forward)],
     },
     fallbacks=[CallbackQueryHandler(filter_callback_data)],
     allow_reentry=True,

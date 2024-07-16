@@ -105,7 +105,8 @@ async def select_bot(update: Update, context: CallbackContext):
         InlineKeyboardButton(text="Bot kanallari",callback_data=f"channels:{token}")],
         [InlineKeyboardButton("Ortga Qaytish",callback_data=f"Mening Botlarim"),
         InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")],
-        [InlineKeyboardButton("Botni O'chirish",callback_data=f"delete_bot:{token}")]  
+        [InlineKeyboardButton("Botni O'chirish",callback_data=f"delete_bot:{token}")] ,
+        [InlineKeyboardButton(text="Obunachilarga xabar yuborish", callback_data=f"start_forward:{token}")]
     ]
     await context.bot.edit_message_text(chat_id=chat_id,text=text,message_id=message_id,reply_markup=InlineKeyboardMarkup(buttons),parse_mode="HTML")
 
@@ -308,6 +309,10 @@ async def filter_callback_data(update: Update, context: CallbackContext):
         await delete_bot(update,context)
     elif "create_quiz" in data.split(":"):
         return await start_conversation_quiz(update,context)
+    elif "start_forward" in data.split(":"):
+        return start_forwrad(update,context)
+    elif "cancel_forward" in data.split(":"):
+        return cancel_forward(update,context)
         
 
     

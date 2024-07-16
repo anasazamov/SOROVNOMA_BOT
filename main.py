@@ -27,13 +27,16 @@ def main(token) -> None:
     states={
         BOT_TOKEN: [MessageHandler(filters.TEXT & (~filters.COMMAND), get_bot_token)],
         CHANEL_NAME: [MessageHandler(filters.TEXT & (~filters.COMMAND), get_chanel_name)],
-        BOT_CHANELS: [MessageHandler(filters.TEXT & (~filters.COMMAND), bot_chanels)],  
+        BOT_CHANELS: [MessageHandler(filters.TEXT & (~filters.COMMAND), bot_chanels)],
         QUESTION1: [MessageHandler(filters.TEXT & (~filters.COMMAND), question_create)],
-        OPTION2: [MessageHandler(filters.TEXT & (~filters.COMMAND), option_create)],      
+        OPTION2: [MessageHandler(filters.TEXT & (~filters.COMMAND), option_create)],
+        START_FORWARD: [MessageHandler(filters.TEXT & (~filters.COMMAND), start_forwrad)],
+        FORWARD_FOR_USER: [MessageHandler(filters.TEXT & (~filters.COMMAND), forward_for_user)],
+        CANCEL_FORWARD: [MessageHandler(filters.TEXT & (~filters.COMMAND), cancel_forward)],
     },
     fallbacks=[CallbackQueryHandler(filter_callback_data)],
-    allow_reentry=True
-    )
+    allow_reentry=True,
+)
     
     application.add_handler(conv_handler)
     application.add_handler(CommandHandler("start", start))
