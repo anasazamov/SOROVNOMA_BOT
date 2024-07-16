@@ -9,7 +9,7 @@ import requests as req
 # Create your views here.
 
 async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text('Kechirasiz, bu komanda tanilmagan. Iltimos, /start komandasidan foydalaning.')
+    await update.message.reply_text(f'Kechirasiz, bu komanda tanilmagan. Iltimos, /start komandasidan foydalaning.')
 
 TOKEN = "6174496827:AAHJb6JtqS5ZH2KHUgLkf_kSc-aR1vnmm-Q"
 application = Application.builder().token(TOKEN).build()
@@ -38,6 +38,9 @@ def send_message(data):
 
 async def telegram(request: HttpRequest) -> HttpResponse:
     """Handle incoming Telegram updates by putting them into the `update_queue`"""
+
+    global DOMEN
+    DOMEN = request.get_host()
 
     # Extract the update from the request body
     update_data = json.loads(request.body.decode())
