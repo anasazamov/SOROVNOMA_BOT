@@ -6,6 +6,7 @@ from asgiref.sync import sync_to_async
 from .callback_func import *
 from requests import get
 
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sorovnoma.settings')
 django.setup()
 
@@ -191,14 +192,14 @@ async def start_forwrad(update: Update, context: CallbackContext):
     button = [
         [InlineKeyboardButton("Bekor Qilish", callback_data="cancel_forward")]
     ]
-    await context.bot.edit_message_text(chat_id=chat_id,text="<b>Obunachilaringizga yubormoqchi bo'lgan xabarni yuboring:</b>",reply_markup=InlineKeyboardMarkup(button),message_id=update.callback_query.message.message_id,parse_mode="HTML")
+    await context.bot.send_message(chat_id=chat_id,text="<b>Obunachilaringizga yubormoqchi bo'lgan xabarni yuboring:</b>",reply_markup=InlineKeyboardMarkup(button),parse_mode="HTML")
     return FORWARD_FOR_USER
 
 async def forward_for_user(update: Update, context: CallbackContext):
     chat_id_from = update.message.chat_id
     message_id = update.message.message_id
     token = context.user_data['token']
-    bot = Bot.objects.get(token=token)
+    bot = await sync_to_async(Bot.objects.get)(token=token)
     bot_users = await sync_to_async(list)(Voter.objects.filter(bot=bot))
     for chat in bot_users:
         await context.bot.forward_message(chat_id=chat.chat_id,message_id=message_id,from_chat_id=chat_id_from)

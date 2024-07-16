@@ -310,9 +310,9 @@ async def filter_callback_data(update: Update, context: CallbackContext):
     elif "create_quiz" in data.split(":"):
         return await start_conversation_quiz(update,context)
     elif "start_forward" in data.split(":"):
-        return start_forwrad(update,context)
+        return await start_forwrad(update,context)
     elif "cancel_forward" in data.split(":"):
-        return cancel_forward(update,context)
+        return await cancel_forward(update,context)
         
 
     

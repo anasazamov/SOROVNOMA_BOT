@@ -1,1 +1,1 @@
-DOMEN = ""
+DOMEN = "https://ahost.uz"
