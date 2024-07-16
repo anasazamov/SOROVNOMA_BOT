@@ -106,7 +106,7 @@ async def select_bot(update: Update, context: CallbackContext):
         [InlineKeyboardButton("Ortga Qaytish",callback_data=f"Mening Botlarim"),
         InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")],
         [InlineKeyboardButton("Botni O'chirish",callback_data=f"delete_bot:{token}")] ,
-        [InlineKeyboardButton(text="Obunachilarga xabar yuborish", callback_data=f"start_forward:{token}")]
+        # [InlineKeyboardButton(text="Obunachilarga xabar yuborish", callback_data=f"start_forward:{token}")]
     ]
     await context.bot.edit_message_text(chat_id=chat_id,text=text,message_id=message_id,reply_markup=InlineKeyboardMarkup(buttons),parse_mode="HTML")
 

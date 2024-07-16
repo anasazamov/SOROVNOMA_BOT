@@ -201,8 +201,13 @@ async def forward_for_user(update: Update, context: CallbackContext):
     token = context.user_data['token']
     bot = await sync_to_async(Bot.objects.get)(token=token)
     bot_users = await sync_to_async(list)(Voter.objects.filter(bot=bot))
+    bot2 = bot1(token)
+
+    await update.message.reply_html(f"{chat_id_from} {message_id}")
+
     for chat in bot_users:
-        await context.bot.forward_message(chat_id=chat.chat_id,message_id=message_id,from_chat_id=chat_id_from)
+        await bot2.copy_message(chat_id=chat.chat_id,message_id=message_id,from_chat_id=chat_id_from)
+    
     await update.message.reply_html("<b>Xabar obunachilarga muvfaqiyatli</b>",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")]]))
     return ConversationHandler.END
 
