@@ -12,11 +12,11 @@ services:
     buildCommand: "./build.sh"
     startCommand: "python -m gunicorn mysite.asgi:application -k uvicorn.workers.UvicornWorker"
     envVars:
-      - key: DATABASE_URL
+      - key: postgresql://mysite:s4UTkWZHjmB8xyGqKTUV8dpSfCDmsrsv@dpg-cqcmn02ju9rs739427n0-a/mysite_vpry
         fromDatabase:
           name: mysitedb
           property: connectionString
-      - key: SECRET_KEY
+      - key: s4UTkWZHjmB8xyGqKTUV8dpSfCDmsrsv
         generateValue: true
-      - key: WEB_CONCURRENCY
+      - key: s4UTkWZHjmB8xyGqKTUV8dpSfCDmsrsv
         value: 4
