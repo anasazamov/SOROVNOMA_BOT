@@ -7,7 +7,7 @@ from .callback_func import *
 from requests import get
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sorovnoma.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 django.setup()
 
 from backend.models import Question, Options, Bot, BotAdmin, REQUIRED_CHANNELS, Bot, BotAdmin, Voter

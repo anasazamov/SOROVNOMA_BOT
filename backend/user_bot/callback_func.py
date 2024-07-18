@@ -6,7 +6,7 @@ from backend.user_bot.is_subscribed_func import is_subscribed
 from asgiref.sync import sync_to_async
 
 # Django muhitini sozlash
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sorovnoma.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 django.setup()
 
 from backend.models import Bot, REQUIRED_CHANNELS, Voter, Question, Options

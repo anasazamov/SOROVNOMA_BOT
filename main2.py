@@ -8,7 +8,7 @@ import django
 # Bot tokeningizni kiriting
 TOKEN = '5994532458:AAEedjxmGAiP_05u91zjlBXD4eiiJ6g2wO0'
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sorovnoma.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 django.setup()
 
 # Bot logs ini sozlash
