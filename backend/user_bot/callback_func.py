@@ -49,7 +49,7 @@ async def check_chanels(channel_data: REQUIRED_CHANNELS, context: CallbackContex
                 }
                 not_subscription.append(dict_)
             elif channel_index:
-                channel_obj = await sync_to_async(REQUIRED_CHANNELS.objects.get)(username=channel_index)
+                channel_obj = await sync_to_async(REQUIRED_CHANNELS.objects.get)(username=channel_index.replace("@",""))
                 channel_obj = channel_obj
                 dict_ = {
                     "name": channel_obj.channel,

@@ -4,7 +4,7 @@ from backend.adminbot.callback_func import *
 from backend.adminbot.conversation_func import OPTION2, QUESTION1, question_create, option_create
 
 # Bot tokeningizni kiriting
-TOKEN = '6174496827:AAHJb6JtqS5ZH2KHUgLkf_kSc-aR1vnmm-Q'
+TOKEN = '6545662307:AAH6Wp6hu2VcWNzAB4Ju6f6_YkJItKezz0g'
 
 # Bot logs ini sozlash
 logging.basicConfig(

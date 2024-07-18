@@ -6,7 +6,7 @@ from backend.user_bot.callback_func import start2, filter_callback_data2, questi
 import os
 import django
 # Bot tokeningizni kiriting
-TOKEN = '5994532458:AAEedjxmGAiP_05u91zjlBXD4eiiJ6g2wO0'
+TOKEN = '6668135627:AAG8Oig0yhosU8H342ULH-ZOwsupTPCXhi8'
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 django.setup()
