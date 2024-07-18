@@ -104,7 +104,7 @@ async def get_bot_token(update: Update, context: CallbackContext):
             token=context.user_data['bot_token'],
             bot_admin=bot_admin
         )
-        bot = bot1(context.user_data['bot_token'])
+        bot2 = bot1(context.user_data['bot_token'])
         from backend.config import DOMEN
 
         await bot.set_webhook(f"{DOMEN}/api/{context.user_data['bot_token']}")
