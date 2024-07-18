@@ -23,7 +23,7 @@ class Bot(models.Model):
 
 class Voter(models.Model):
 
-    chat_id = models.IntegerField()
+    chat_id = models.BigIntegerField()
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50)
