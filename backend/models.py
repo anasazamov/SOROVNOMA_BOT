@@ -34,7 +34,7 @@ class REQUIRED_CHANNELS(models.Model):
     channel = models.CharField(max_length=50)
     username = models.CharField(max_length=50, blank= True)
     channel_link = models.URLField(max_length=150, blank= True)
-    channel_id = models.IntegerField(blank= True)
+    channel_id = models.IntegerField(blank= True,null=True)
     bot = models.ForeignKey(to=Bot,on_delete=models.CASCADE)
 
     def __str__(self) -> str:

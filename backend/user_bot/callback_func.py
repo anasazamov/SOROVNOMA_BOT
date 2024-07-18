@@ -53,7 +53,7 @@ async def check_chanels(channel_data: REQUIRED_CHANNELS, context: CallbackContex
                 channel_obj = channel_obj[0]
                 dict_ = {
                     "name": channel_obj.channel,
-                    "channel_link": channel_obj.channel_link
+                    "channel_link": f"https://t.me/{channel_obj.username}"
                 }
                 not_subscription.append(dict_)
 
@@ -122,7 +122,7 @@ async def question2(update: Update, context: CallbackContext):
             name = option.option
             option_pk = option.pk
             total_vote = option.total_vote
-            buttons.append([InlineKeyboardButton(text=f"{name} - {total_vote}",callback_data=f"select_option:{question_id}:{option_pk}:{is_exist_other_q}")])
+            buttons.append([InlineKeyboardButton(text=f"{name} - {total_vote}",callback_data=f"select_option:{question_id}:{option_pk}:{is_exist_other_q}", switch_inline_query="start")])
         return await context.bot.send_message(text=f"<b>{question_0.name}</b>", reply_markup=InlineKeyboardMarkup(buttons),chat_id=chat_id,parse_mode="HTML")
     await message.reply_html("<b>Barcha so'rovnomalarga javob berib bo'lgansiz</b>")
 
@@ -159,3 +159,4 @@ async def filter_callback_data2(update: Update, context: CallbackContext):
         await start2(update,context)
     elif "select_option" in data.split(":"):
         await select_option(update,context)
+    
