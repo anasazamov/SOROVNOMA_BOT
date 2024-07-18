@@ -41,16 +41,16 @@ async def check_chanels(channel_data: REQUIRED_CHANNELS, context: CallbackContex
         not_subscription = []
         for channel_index in list_chanel:
             if type(channel_index) == int:
-                channel_obj = await sync_to_async(list)(REQUIRED_CHANNELS.objects.filter(channel_id=int(f"{channel_index}".replace("-100",""))))
-                channel_obj = channel_obj[0]
+                channel_obj = await sync_to_async(REQUIRED_CHANNELS.objects.get)(channel_id=int(f"{channel_index}".replace("-100","")))
+                channel_obj = channel_obj
                 dict_ = {
                     "name": channel_obj.channel,
                     "channel_link": channel_obj.channel_link
                 }
                 not_subscription.append(dict_)
             elif channel_index:
-                channel_obj = await sync_to_async(list)(REQUIRED_CHANNELS.objects.filter(username=channel_index))
-                channel_obj = channel_obj[0]
+                channel_obj = await sync_to_async(REQUIRED_CHANNELS.objects.get)(username=channel_index)
+                channel_obj = channel_obj
                 dict_ = {
                     "name": channel_obj.channel,
                     "channel_link": f"https://t.me/{channel_obj.username}"

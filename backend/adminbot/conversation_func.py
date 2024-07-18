@@ -79,7 +79,7 @@ async def start_conversation(update: Update, context: CallbackContext):
     return BOT_TOKEN
 
 async def set_webhook_main(token):
-    TOKEN = "6174496827:AAHJb6JtqS5ZH2KHUgLkf_kSc-aR1vnmm-Q"
+
     application = Application.builder().token(token).build()
     domen = f"https://sorovnoma-bot.onrender.com/api/{token}"
     set_webhook_info = await application.bot.set_webhook(domen)
@@ -158,10 +158,14 @@ async def bot_chanels(update: Update, context: CallbackContext):
             await update.message.reply_html("<b>Kanal muvaqqiyatli qo'shildi. Yana kanal qo'shishni hohlaysizmi?\nKanal nomini kiriting:</b>",reply_markup=InlineKeyboardMarkup(buttons))
             return CHANEL_NAME
         else:
-            update.message.reply_html("<b>Yuborgan havolangiz yaroqsiz</b>",reply_markup=InlineKeyboardMarkup(buttons))
+            await update.message.reply_html("<b>Yuborgan havolangiz yaroqsiz</b>",reply_markup=InlineKeyboardMarkup(buttons))
             return BOT_CHANELS
         
     elif chanel_link.isnumeric():
+        is_exist = await sync_to_async(REQUIRED_CHANNELS.objects.filter(bot=bot,channel_id=chanel_link).exists)()
+        if is_exist:
+            update.message.reply_html("<b>Yuborgan ID raqamdagi kanalingiz mavjud boshqa ID raqamni yuboring!!!</b>",reply_markup=InlineKeyboardMarkup(buttons))
+            return BOT_CHANELS
         chanel_obj = await sync_to_async(REQUIRED_CHANNELS.objects.create)(bot=bot,channel_id=chanel_link,channel=chanel)
         chanel_pk = chanel_obj.pk
         context.user_data['channel_id'] = chanel_pk
@@ -171,11 +175,15 @@ async def bot_chanels(update: Update, context: CallbackContext):
         response = get(f"https://t.me/{chanel_link}")
         
         if response.status_code == 200:
+            is_exist = await sync_to_async(REQUIRED_CHANNELS.objects.filter(bot=bot,username=chanel_link).exists)()
+            if is_exist:
+                update.message.reply_html("<b>Yuborgan USERNAMEdagi kanalingiz mavjud boshqa USERNAME yuboring!!!</b>",reply_markup=InlineKeyboardMarkup(buttons))
+                return BOT_CHANELS
             await sync_to_async(REQUIRED_CHANNELS.objects.create)(bot=bot,username=chanel_link,channel=chanel)
             await update.message.reply_html("<b>Kanal muvaqqiyatli qo'shildi. Yana kanal qo'shishni hohlaysizmi?\nKanal nomini kiriting:</b>",reply_markup=InlineKeyboardMarkup(buttons))
             return CHANEL_NAME
     
-        await update.message.reply_html("<bYuborgan usernamemingiz yaroqsiz, tekshirib qaytadan yuboring!!!</b>",reply_markup=InlineKeyboardMarkup(buttons))
+        await update.message.reply_html("<b>Yuborgan usernamemingiz yaroqsiz, tekshirib qaytadan yuboring!!!</b>",reply_markup=InlineKeyboardMarkup(buttons))
         return BOT_CHANELS
     
 
