@@ -1,7 +1,7 @@
 import os
 import django
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, Bot as bot1
-from telegram.ext import CallbackContext, ConversationHandler
+from telegram.ext import CallbackContext, ConversationHandler, Application
 from asgiref.sync import sync_to_async
 from .callback_func import *
 from requests import get
@@ -78,6 +78,12 @@ async def start_conversation(update: Update, context: CallbackContext):
     await update.callback_query.message.reply_text("<b>Bot tokeni kiriting:</b>", parse_mode="HTML",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Bekor Qilish",callback_data="cancel")]]))
     return BOT_TOKEN
 
+async def set_webhook_main(token):
+    TOKEN = "6174496827:AAHJb6JtqS5ZH2KHUgLkf_kSc-aR1vnmm-Q"
+    application = Application.builder().token(token).build()
+    domen = f"https://sorovnoma-bot.onrender.com/api/{token}"
+    set_webhook_info = await application.bot.set_webhook(domen)
+
 # Get Bot Token and Validate
 async def get_bot_token(update: Update, context: CallbackContext):
     
@@ -104,10 +110,9 @@ async def get_bot_token(update: Update, context: CallbackContext):
             token=context.user_data['bot_token'],
             bot_admin=bot_admin
         )
-        bot2 = bot1(context.user_data['bot_token'])
         from backend.config import DOMEN
 
-        await bot.set_webhook(f"{DOMEN}/api/{context.user_data['bot_token']}")
+        await set_webhook_main(context.user_data["bot_token"])
         buttons = [
             [InlineKeyboardButton(bot.name,callback_data=f"bot:{bot.token}")],
             [InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")]
