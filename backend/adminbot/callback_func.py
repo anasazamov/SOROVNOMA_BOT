@@ -200,6 +200,7 @@ async def active_quiz(update: Update, context: CallbackContext):
     is_active = question.is_active
     question.is_active = not is_active
     await sync_to_async(question.save)()
+    is_active = question.is_active
     if is_active:
         active_text = "So'rovnoma faol"
     else:
