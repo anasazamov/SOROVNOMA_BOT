@@ -34,8 +34,10 @@ async def start(update: Update, context: CallbackContext):
         return 0
     
 
-    try:
-        admin = await sync_to_async(BotAdmin.objects.get)(chat_id=chat_id)
+    is_exist_admin = await sync_to_async(BotAdmin.objects.filter(chat_id=chat_id).exists)()
+
+    if is_exist_admin:
+        
         inline_keyboard = [
             [InlineKeyboardButton(text="Mening botlarim", callback_data="Mening Botlarim")],
             [InlineKeyboardButton(text="Bot Yaratish", callback_data="Bot Yaratish")]
@@ -43,7 +45,7 @@ async def start(update: Update, context: CallbackContext):
         await context.bot.send_message(chat_id=chat_id,
             text="Assalom Alaykum. Qayta Xush kelibsiz",
             reply_markup=InlineKeyboardMarkup(inline_keyboard))
-    except BotAdmin.DoesNotExist:
+    else:
         admin = await sync_to_async(BotAdmin.objects.create)(
             first_name=first_name,
             last_name=last_name,
