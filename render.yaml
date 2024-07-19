@@ -7,10 +7,10 @@ databases:
 services:
   - type: web
     plan: free
-    name: app
+    name: mysite
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "python -m gunicorn app.asgi:application -k uvicorn.workers.UvicornWorker"
+    startCommand: "python -m gunicorn mysite.asgi:application -k uvicorn.workers.UvicornWorker"
     envVars:
       - key: postgresql://sorovnoma_user:6v6viSkXcL6GEV0Q9CKnFCt6gtUr7QwD@dpg-cqct2e9u0jms73e4dag0-a.oregon-postgres.render.com/sorovnoma
         fromDatabase:

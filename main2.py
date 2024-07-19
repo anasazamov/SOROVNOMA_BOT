@@ -8,7 +8,7 @@ import django
 # Bot tokeningizni kiriting
 TOKEN = '6668135627:AAG8Oig0yhosU8H342ULH-ZOwsupTPCXhi8'
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 django.setup()
 
 # Bot logs ini sozlash
