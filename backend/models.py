@@ -24,8 +24,7 @@ class Bot(models.Model):
 class Voter(models.Model):
 
     chat_id = models.BigIntegerField()
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=1050, blank=True)
     username = models.CharField(max_length=50)
     bot = models.ForeignKey(to=Bot,on_delete=models.CASCADE)
 

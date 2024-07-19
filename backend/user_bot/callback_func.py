@@ -77,13 +77,14 @@ async def start2(update: Update, context: CallbackContext):
     if chanels:
         return await requirements_chanels(update, context, chanels)
     
-    first_name = message.chat.first_name
-    last_name = message.chat.last_name
+    first_name = message.chat.full_name
     username = message.chat.username
+    if username:
+        username = " "
     is_exists_voter = await sync_to_async(Voter.objects.filter(chat_id=chat_id).exists)()
     
     if not is_exists_voter:
-        await sync_to_async(Voter.objects.create)(first_name=first_name,last_name=last_name,username=username,chat_id=chat_id,bot=bot)
+        await sync_to_async(Voter.objects.create)(first_name=first_name,username=username,chat_id=chat_id,bot=bot)
     
     await message.reply_html("<b>Аssalomu Аlaykum.\n🙂 Soʼrovnoma botga xush kelibsiz!</b>",reply_markup=ReplyKeyboardMarkup([[KeyboardButton("Ovoz Berish")]],resize_keyboard=True))
 
