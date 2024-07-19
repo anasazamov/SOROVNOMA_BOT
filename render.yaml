@@ -19,4 +19,4 @@ services:
       - key: 6v6viSkXcL6GEV0Q9CKnFCt6gtUr7QwD
         generateValue: true
       - key: 6v6viSkXcL6GEV0Q9CKnFCt6gtUr7QwD
-        value: 4
+        value: 4 
