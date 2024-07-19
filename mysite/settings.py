@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'backend.apps.BackendConfig',
-    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -81,7 +80,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://sorovnoma_user:6v6viSkXcL6GEV0Q9CKnFCt6gtUr7QwD@dpg-cqct2e9u0jms73e4dag0-a.oregon-postgres.render.com/sorovnoma',
+        default='postgresql://sorovnoma_lv1q_user:IN51GgoaKusepBxZJWFwRj9BF2DX7PQ3@dpg-cqd9med6l47c73fr5rk0-a.oregon-postgres.render.com/sorovnoma_lv1q',
         conn_max_age=600
     )
 }
