@@ -79,7 +79,7 @@ async def start2(update: Update, context: CallbackContext):
     
     first_name = message.chat.full_name
     username = message.chat.username
-    if username:
+    if not username:
         username = " "
     is_exists_voter = await sync_to_async(Voter.objects.filter(chat_id=chat_id).exists)()
     
