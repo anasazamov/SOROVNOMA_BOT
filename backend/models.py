@@ -4,7 +4,7 @@ from django.db import models
 
 class BotAdmin(models.Model):
 
-    chat_id = models.IntegerField()
+    chat_id = models.BigIntegerField()
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50)
@@ -23,7 +23,7 @@ class Bot(models.Model):
 
 class Voter(models.Model):
 
-    chat_id = models.BigIntegerField(max_length=16165165165165165165165165165165146545165165465165165451651651651365165)
+    chat_id = models.BigIntegerField()
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50)
