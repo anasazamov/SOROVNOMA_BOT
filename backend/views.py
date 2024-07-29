@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from telegram import Update
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ConversationHandler, MessageHandler, filters, ContextTypes
 from .adminbot.callback_func import *
@@ -41,6 +41,10 @@ def send_message(data):
     response = req.post(URL, data={"chat_id": 1698951222, "text": f"{data}"})
 
 async def telegram(request: HttpRequest) -> HttpResponse:
+
+
+
+
     """Handle incoming Telegram updates by putting them into the `update_queue`"""
 
     global DOMEN
@@ -67,6 +71,11 @@ async def telegram(request: HttpRequest) -> HttpResponse:
     return HttpResponse({"message":"OK"})
 
 async def telegram2(request: HttpRequest,token) -> HttpResponse:
+
+    if request.method == "get":
+        return JsonResponse({"message": "this is route working"})
+
+
     """Handle incoming Telegram updates by putting them into the `update_queue`"""
     application2 = Application.builder().token(token).build()
 
