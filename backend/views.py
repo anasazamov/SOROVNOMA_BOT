@@ -42,13 +42,8 @@ def send_message(data):
 
 async def telegram(request: HttpRequest) -> HttpResponse:
 
-
-
-
-    """Handle incoming Telegram updates by putting them into the `update_queue`"""
-
-    global DOMEN
-    DOMEN = request.get_host()
+    if request.method == "GET":
+        return JsonResponse({"message": "this is route working"})
 
     # Extract the update from the request body
     update_data = json.loads(request.body.decode())
