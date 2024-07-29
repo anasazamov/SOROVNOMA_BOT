@@ -81,7 +81,7 @@ async def start_conversation(update: Update, context: CallbackContext):
 async def set_webhook_main(token):
 
     application2 = Application.builder().token(token).build()
-    domen = f"https://sorovnoma-bot.onrender.com/api/{token}"
+    domen = f"https://surway.samtuit.uz/api/{token}"
     set_webhook_info = await application2.bot.set_webhook(domen)
 
 # Get Bot Token and Validate
