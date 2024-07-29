@@ -1,1 +1,1 @@
-DOMEN = "https://sorovnoma-bot.onrender.com"
+DOMEN = "subway.samtuit.uz"
