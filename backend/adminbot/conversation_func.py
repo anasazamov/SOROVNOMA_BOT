@@ -119,6 +119,8 @@ async def get_bot_token(update: Update, context: CallbackContext):
             [InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")]
             
             ]
+        
+        from backend.views import DOMEN
 
         await update.message.reply_text(f"Bot muvaffaqiyatli qo'shildi!\nBotdan foydalanish uchun kanal nomini kiriting:\n{DOMEN}",reply_markup=InlineKeyboardMarkup(buttons),parse_mode="HTML")
         return CHANEL_NAME

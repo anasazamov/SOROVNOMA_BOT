@@ -5,7 +5,7 @@ import asyncio
 async def main():
     TOKEN = "6174496827:AAHJb6JtqS5ZH2KHUgLkf_kSc-aR1vnmm-Q"
     application = Application.builder().token(TOKEN).build()
-    domen = f"https://195.158.8.30:8000/api/"
+    domen = f"https://sorovnoma-bot.onrender.com/api/"
     await application.bot.delete_webhook()
     set_webhook_info = await application.bot.set_webhook(domen)
 

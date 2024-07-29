@@ -5,7 +5,7 @@ from .adminbot.callback_func import *
 from .user_bot.callback_func import *
 import json
 import requests as req
-from .config import DOMEN
+
 
 # Create your views here.
 
@@ -42,6 +42,7 @@ def send_message(data):
 
 async def telegram(request: HttpRequest) -> HttpResponse:
 
+    global DOMEN
     DOMEN = request.get_host()
 
     if request.method == "GET":   
