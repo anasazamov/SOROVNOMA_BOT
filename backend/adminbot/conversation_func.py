@@ -5,7 +5,6 @@ from telegram.ext import CallbackContext, ConversationHandler, Application
 from asgiref.sync import sync_to_async
 from .callback_func import *
 from requests import get
-from backend.config import DOMEN
 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
@@ -81,6 +80,8 @@ async def start_conversation(update: Update, context: CallbackContext):
 
 async def set_webhook_main(token):
 
+    from backend.views import DOMEN
+
     application2 = Application.builder().token(token).build()
     domen = f"https://{DOMEN}/api/{token}"
     set_webhook_info = await application2.bot.set_webhook(domen)
@@ -119,10 +120,8 @@ async def get_bot_token(update: Update, context: CallbackContext):
             [InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")]
             
             ]
-        
-        from backend.views import DOMEN
 
-        await update.message.reply_text(f"Bot muvaffaqiyatli qo'shildi!\nBotdan foydalanish uchun kanal nomini kiriting:\n{DOMEN}",reply_markup=InlineKeyboardMarkup(buttons),parse_mode="HTML")
+        await update.message.reply_text(f"Bot muvaffaqiyatli qo'shildi!\nBotdan foydalanish uchun kanal nomini kiriting:",reply_markup=InlineKeyboardMarkup(buttons),parse_mode="HTML")
         return CHANEL_NAME
     else:
         await update.message.reply_text("Noto'g'ri token. Qayta urining:")
