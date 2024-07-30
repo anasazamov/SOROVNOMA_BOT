@@ -18,7 +18,7 @@ async def start(update: Update, context: CallbackContext):
         username = update.message.from_user.username
         if not username:
             username = "null"
-        first_name = update.message.from_user.first_name
+        first_name = update.message.from_user.full_name
         last_name = update.message.from_user.last_name
     elif update.callback_query:
         chat_id = update.callback_query.message.chat_id
@@ -50,7 +50,6 @@ async def start(update: Update, context: CallbackContext):
     else:
         admin = await sync_to_async(BotAdmin.objects.create)(
             first_name=first_name,
-            last_name=last_name,
             chat_id=chat_id,
             username=username
         )
