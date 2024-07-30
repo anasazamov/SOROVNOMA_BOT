@@ -16,6 +16,8 @@ async def start(update: Update, context: CallbackContext):
     if update.message:
         chat_id = update.message.chat_id
         username = update.message.from_user.username
+        if not username:
+            username = "null"
         first_name = update.message.from_user.first_name
         last_name = update.message.from_user.last_name
     elif update.callback_query:
