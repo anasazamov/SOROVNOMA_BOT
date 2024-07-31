@@ -14,7 +14,7 @@ from backend.models import Question, Options, Bot, BotAdmin, REQUIRED_CHANNELS, 
 from .check_bot import check_bot_token
 
 # Stages
-QUESTION1, OPTION2, BOT_TOKEN, CHANEL_NAME, BOT_CHANELS, START_FORWARD, FORWARD_FOR_USER, CANCEL_FORWARD = range(8)
+QUESTION1, OPTION2, BOT_TOKEN, CHANEL_NAME, BOT_CHANELS, START_FORWARD, FORWARD_FOR_USER, CANCEL_FORWARD, START_CHANEL = range(9)
 
 # Entry Point for the Conversation
 async def start_conversation_quiz(update: Update, context: CallbackContext):
@@ -126,6 +126,15 @@ async def get_bot_token(update: Update, context: CallbackContext):
     else:
         await update.message.reply_text("Noto'g'ri token. Qayta urining:")
         return BOT_TOKEN
+    
+async def start_chanel(update: Update, context: CallbackContext):
+
+    data = update.callback_query.data.split(":")
+    token = data[1]+":"+data[2]
+    context.user_data['bot_token'] = token
+
+    await update.callback_query.message.reply_text("<b>Botga kanal qo'shish uchun kanal nomini yozing</b>", parse_mode="HTML",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Bekor Qilish",callback_data=f"cancel")]]))
+    return CHANEL_NAME
 
 async def get_chanel_name(update: Update, context: CallbackContext):
 

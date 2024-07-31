@@ -18,6 +18,7 @@ conv_handler = ConversationHandler(
     entry_points=[CallbackQueryHandler(filter_callback_data)],
     states={
         BOT_TOKEN: [MessageHandler(filters.TEXT & (~filters.COMMAND), get_bot_token)],
+        START_CHANEL: [MessageHandler(filters.TEXT & (~filters.COMMAND), start_chanel)],
         CHANEL_NAME: [MessageHandler(filters.TEXT & (~filters.COMMAND), get_chanel_name)],
         BOT_CHANELS: [MessageHandler(filters.TEXT & (~filters.COMMAND), bot_chanels)],
         QUESTION1: [MessageHandler(filters.TEXT & (~filters.COMMAND), question_create)],

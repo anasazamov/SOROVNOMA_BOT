@@ -149,7 +149,7 @@ async def bot_chanels_func(update: Update, context: CallbackContext):
     for question in questions:
         buttons.append([InlineKeyboardButton(question.channel,callback_data=f'select_chanel:{question.pk}')])
     
-    buttons.append([InlineKeyboardButton("Ortga Qaytish",callback_data=f"bot:{token}")])
+    buttons.append([InlineKeyboardButton("Ortga Qaytish",callback_data=f"bot:{token}"), InlineKeyboardButton("Kanal Qo'shish",callback_data=f"start_chanel:{token}")])
     buttons.append([InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")])
     await context.bot.edit_message_text(chat_id=chat_id,message_id=message_id,text=text,parse_mode="HTML",reply_markup=InlineKeyboardMarkup(buttons))
 
@@ -317,6 +317,8 @@ async def filter_callback_data(update: Update, context: CallbackContext):
         return await start_forwrad(update,context)
     elif "cancel_forward" in data.split(":"):
         return await cancel_forward(update,context)
+    elif "start_chanel" in data.split(":"):
+        return await start_chanel(update, context)
         
 
     
