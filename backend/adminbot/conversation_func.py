@@ -116,9 +116,7 @@ async def get_bot_token(update: Update, context: CallbackContext):
 
         await set_webhook_main(context.user_data["bot_token"])
         buttons = [
-            [InlineKeyboardButton(bot.name,callback_data=f"bot:{bot.token}")],
             [InlineKeyboardButton("Bosh Menyuga Qaytish",callback_data="main menu")]
-            
             ]
 
         await update.message.reply_text(f"Bot muvaffaqiyatli qo'shildi!\nBotdan foydalanish uchun kanal nomini kiriting:",reply_markup=InlineKeyboardMarkup(buttons),parse_mode="HTML")
