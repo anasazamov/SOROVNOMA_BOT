@@ -158,6 +158,10 @@ async def select_option(update: Update, context: CallbackContext):
     option_obj = await sync_to_async(Options.objects.get)(id=option_id)
     voter_obj = await sync_to_async(Voter.objects.get)(chat_id=chat_id)
 
+    is_exists_voter = await sync_to_async(question_obj.option.filter(votes=voter_obj).exists)()
+    if is_exists_voter:
+        return await update.callback_query.message.reply_html("<b>Barcha so'rovnomalarga javob berib bo'lgansiz!!!</b>")
+
     option_obj.total_vote = option_obj.total_vote + 1
     await sync_to_async(option_obj.votes.add)(voter_obj)
     await sync_to_async(option_obj.save)()
