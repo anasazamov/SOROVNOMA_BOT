@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://sorovnoma_lv1q_user:IN51GgoaKusepBxZJWFwRj9BF2DX7PQ3@dpg-cqd9med6l47c73fr5rk0-a.oregon-postgres.render.com/sorovnoma_lv1q',
+        default='postgresql://sorovnooma_owner:J0hGbLoimrK7@ep-patient-fire-a1y2u3cu.ap-southeast-1.aws.neon.tech/sorovnooma?sslmode=require',
         conn_max_age=600
     )
 }
