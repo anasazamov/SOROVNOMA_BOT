@@ -108,7 +108,7 @@ async def question2(update: Update, context: CallbackContext):
         return await requirements_chanels(update, context, chanels)
     
     voter = await sync_to_async(Voter.objects.get)(chat_id=chat_id)
-    questions = await sync_to_async(list)(Question.objects.filter(bot=bot,is_active=True).exclude(voter=voter))
+    questions = await sync_to_async(list)(Question.objects.filter(bot=bot, is_active=True).exclude(voter=voter))
     
     if questions:
         question_0 = questions[0]
@@ -116,6 +116,7 @@ async def question2(update: Update, context: CallbackContext):
         is_exist_other_q = 1
     else:
         is_exist_other_q = 0
+    
     if is_exist_other_q: 
         buttons = []
         options = await sync_to_async(list)(question_0.option.all())
@@ -123,10 +124,27 @@ async def question2(update: Update, context: CallbackContext):
             name = option.option
             option_pk = option.pk
             total_vote = option.total_vote
-            buttons.append([InlineKeyboardButton(text=f"{name} - {total_vote}",callback_data=f"select_option:{question_id}:{option_pk}:{is_exist_other_q}", switch_inline_query="start")])
-        return await context.bot.send_message(text=f"<b>{question_0.name}</b>", reply_markup=InlineKeyboardMarkup(buttons),chat_id=chat_id,parse_mode="HTML")
-    await message.reply_html("<b>Barcha so'rovnomalarga javob berib bo'lgansiz</b>")
-
+            # Switch inline query ni boshqa chatlar uchun ham ko'rinadigan qilib o'rnatish
+            buttons.append([
+                InlineKeyboardButton(
+                    text=f"{name} - {total_vote}",
+                    callback_data=f"select_option:{question_id}:{option_pk}:{is_exist_other_q}",
+                    switch_inline_query_current_chat=f"{name}"  # Yoki switch_inline_query=f"{name}"
+                )
+            ])
+        
+        return await context.bot.send_message(
+            text=f"<b>{question_0.name}</b>", 
+            reply_markup=InlineKeyboardMarkup(buttons),
+            chat_id=chat_id,
+            parse_mode="HTML"
+        )
+    
+    await context.bot.send_message(
+        chat_id=chat_id,
+        text="<b>Barcha so'rovnomalarga javob berib bo'lgansiz</b>",
+        parse_mode="HTML"
+    )
 async def select_option(update: Update, context: CallbackContext):
 
     data = update.callback_query.data.split(":")
