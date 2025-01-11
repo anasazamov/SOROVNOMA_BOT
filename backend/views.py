@@ -13,7 +13,7 @@ async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(f'Kechirasiz, bu komanda tanilmagan. Iltimos, /start komandasidan foydalaning.')
 
 TOKEN = "6174496827:AAHJb6JtqS5ZH2KHUgLkf_kSc-aR1vnmm-Q"
-application2 = Application.builder().token(TOKEN).build()
+application = Application.builder().token(TOKEN).build()
 conv_handler = ConversationHandler(
     entry_points=[CallbackQueryHandler(filter_callback_data)],
     states={
@@ -32,10 +32,10 @@ conv_handler = ConversationHandler(
 )
 
 # Add handlers to the application
-application2.add_handler(conv_handler)
-application2.add_handler(CommandHandler("start", start))
-application2.add_handler(CallbackQueryHandler(filter_callback_data))
-application2.add_handler(MessageHandler(filters.COMMAND, unknown))
+application.add_handler(conv_handler)
+application.add_handler(CommandHandler("start", start))
+application.add_handler(CallbackQueryHandler(filter_callback_data))
+application.add_handler(MessageHandler(filters.COMMAND, unknown))
 
 def send_message(data):
     URL = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
@@ -51,21 +51,17 @@ async def telegram(request: HttpRequest) -> HttpResponse:
 
     # Extract the update from the request body
     update_data = json.loads(request.body.decode())
-    update = Update.de_json(update_data, application2.bot)
+    update = Update.de_json(update_data, application.bot)
     #send_message(update_data)
-    # Define your conversation handler
 
-    # Initialize the application2
-    await application2.initialize()
+    await application.initialize()
 
-    # Put the update in the queue
-    await application2.update_queue.put(update)
+    await application.update_queue.put(update)
 
-    # Process the update
-    await application2.process_update(update)
+    await application.process_update(update)
 
 
-    await application2.shutdown()
+    await application.shutdown()
 
     return HttpResponse({"message":"OK"})
 

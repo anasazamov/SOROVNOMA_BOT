@@ -11,6 +11,7 @@ from backend.models import BotAdmin, Bot, Question, REQUIRED_CHANNELS
 from .conversation_func import *
 from .test import write_survey_results_to_csv
 from requests import get
+
 async def start(update: Update, context: CallbackContext):
     
     if update.message:
@@ -20,12 +21,14 @@ async def start(update: Update, context: CallbackContext):
             username = "null"
         first_name = update.message.from_user.full_name
         last_name = update.message.from_user.last_name
+    
     elif update.callback_query:
         chat_id = update.callback_query.message.chat_id
         message_id = update.callback_query.message.message_id
         inline_keyboard = [
             [InlineKeyboardButton(text="Mening botlarim", callback_data="Mening Botlarim")],
-            [InlineKeyboardButton(text="Bot Yaratish", callback_data="Bot Yaratish")]
+            [InlineKeyboardButton(text="Bot Yaratish", callback_data="Bot Yaratish")],
+            [InlineKeyboardButton(text="Botdan foydalanish qo'llanmasi", callback_data="help")]
         ]
         await context.bot.edit_message_text(chat_id=chat_id,
             text="<b>Bosh Menyu</b>",
