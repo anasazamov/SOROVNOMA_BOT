@@ -3,6 +3,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ConversationHandler, MessageHandler, filters, ContextTypes
 from .adminbot.callback_func import *
 from .user_bot.callback_func import *
+from .adminbot.help_prerefrence import *
 import json
 import requests as req
 
@@ -34,6 +35,7 @@ conv_handler = ConversationHandler(
 # Add handlers to the application
 application.add_handler(conv_handler)
 application.add_handler(CommandHandler("start", start))
+application.add_handler(CallbackQueryHandler(help, pattern="help"))
 application.add_handler(CallbackQueryHandler(filter_callback_data))
 application.add_handler(MessageHandler(filters.COMMAND, unknown))
 

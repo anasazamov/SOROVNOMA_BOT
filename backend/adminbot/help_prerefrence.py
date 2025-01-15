@@ -3,4 +3,4 @@ from telegram.ext import CallbackContext
 
 async def help(update: Update, context: CallbackContext):
     """Send a message when the click qo' is issued."""
-    await update.message.reply_text('Help!')
+    await update.message.reply_text('Ish jarayonida\n bosh sahifaga qaytish uchun /start ni bosing otish uchun /start ni bosing') 
