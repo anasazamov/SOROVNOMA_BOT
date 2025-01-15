@@ -77,12 +77,13 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        # ...
-        "OPTIONS": {
-            "init_command": "PRAGMA synchronous=3; PRAGMA cache_size=2000;",
-        },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'bot',
+        'USER': 'bot',
+        'PASSWORD': 'bot',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
