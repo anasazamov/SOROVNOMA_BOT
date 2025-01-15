@@ -35,7 +35,7 @@ conv_handler = ConversationHandler(
 # Add handlers to the application
 application.add_handler(conv_handler)
 application.add_handler(CommandHandler("start", start))
-application.add_handler(CallbackQueryHandler(help_func, pattern="^help$"))
+application.add_handler(CallbackQueryHandler(help_func, pattern="^help"))
 application.add_handler(CallbackQueryHandler(filter_callback_data))
 application.add_handler(MessageHandler(filters.COMMAND, unknown))
 
